@@ -75,3 +75,7 @@ Any OpenAI-compatible endpoint works — set `OPENAI_BASE_URL` accordingly.
 - `/chat` — AI assistant with tool calls
 - `/search`, `/ping`, `/debug` — training utilities
 - `/docs`, `/api`, `/api/docs` — API surface and documentation
+
+## Diagnostics
+
+See `/api/ping` and `/api/dns` for operator connectivity checks.
