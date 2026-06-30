@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.0.1";
 
 export function GET() {
   return NextResponse.json({
