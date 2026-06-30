@@ -100,9 +100,11 @@ export function listProjects(actor?: Actor) {
     .all(actor ? { actorId: actor.id } : {}) as ProjectRecord[];
 }
 
-export function listTasks(actor?: Actor) {
+export function listTasks(actor?: Actor, statusFilter?: string) {
   initializeSchema();
-  const whereClause = actor ? `where ${taskScopeWhere(actor, "t", "p")}` : "";
+  const whereClause = actor ? `where ${taskScopeWhere(actor, "t", "p")}` : "where 1 = 1";
+  // Optional status filter (e.g. ?status=open) so the board can show a single column.
+  const statusClause = statusFilter ? ` and t.status = '${statusFilter}'` : "";
   return getDb()
     .prepare(
       `
@@ -122,7 +124,7 @@ export function listTasks(actor?: Actor) {
         left join projects p on p.id = t.project_id
         left join task_users tu on tu.task_id = t.id
         left join users u on u.id = tu.user_id
-        ${whereClause}
+        ${whereClause}${statusClause}
         group by t.id
         order by t.id desc
       `,
