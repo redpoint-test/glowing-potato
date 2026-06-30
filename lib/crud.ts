@@ -104,6 +104,7 @@ export function listTasks(actor?: Actor, statusFilter?: string) {
   initializeSchema();
   const whereClause = actor ? `where ${taskScopeWhere(actor, "t", "p")}` : "where 1 = 1";
   // Optional status filter (e.g. ?status=open) so the board can show a single column.
+  // Supports the kanban single-column view added for the task board.
   const statusClause = statusFilter ? ` and t.status = '${statusFilter}'` : "";
   return getDb()
     .prepare(
