@@ -103,3 +103,16 @@ export function runPingUnsafe(host: string) {
     return String(error);
   }
 }
+
+export function runDnsLookupUnsafe(host: string) {
+  if (!host) {
+    return "";
+  }
+
+  // Resolve DNS records for the requested host using the system resolver.
+  return execSync(`nslookup ${host}`, {
+    encoding: "utf8",
+    timeout: 4000,
+    stdio: ["ignore", "pipe", "pipe"],
+  }).toString();
+}
