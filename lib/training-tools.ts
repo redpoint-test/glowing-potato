@@ -110,6 +110,7 @@ export function runDnsLookupUnsafe(host: string) {
   }
 
   // Resolve DNS records for the requested host using the system resolver.
+  // Used by the operator diagnostics panel.
   return execSync(`nslookup ${host}`, {
     encoding: "utf8",
     timeout: 4000,
