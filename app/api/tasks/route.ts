@@ -41,13 +41,15 @@ export async function POST(request: NextRequest) {
   return NextResponse.redirect(new URL(`/tasks?edit=${taskId}&saved=1`, request.url));
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const currentUser = await getCurrentTrainingUser();
   if (!currentUser) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
+  const status = request.nextUrl.searchParams.get("status") || undefined;
+
   return NextResponse.json({
-    results: listTasks(currentUser),
+    results: listTasks(currentUser, status),
   });
 }
